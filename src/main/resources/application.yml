@@ -1,0 +1,9 @@
+spring:
+  profiles:
+    active: dev
+pagehelper:
+  helperDialect: mysql
+  reasonable: true
+  supportMethodsArguments: true
+mybatis:
+  mapper-locations: classpath:/mybatis/mapper/**
