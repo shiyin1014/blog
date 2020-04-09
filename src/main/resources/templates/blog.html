@@ -42,7 +42,7 @@
         <div class="ui top attached segment">
             <div class="ui horizontal link list">
                 <div class="item">
-                    <img th:src="@{${blog.user.avatar}" src="https://unsplash.it/100/100?image=1005" alt=""
+                    <img th:src="@{${blog.user.avatar}}" src="https://unsplash.it/100/100?image=1005" alt=""
                          class="ui avatar image">
                     <div class="content"><a href="#" th:text="${blog.user.username}" class="header">杜世银</a></div>
                 </div>
@@ -69,7 +69,7 @@
             <br>
 
             <!--content-->
-            <div id="content" th:text="${blog.content}"
+            <div id="content" th:utext="${blog.content}"
                  class="typo  typo-selection js-toc-content m-padded-lr-responsive m-padded-tb-large">
 
             </div>
@@ -89,12 +89,14 @@
                 <div class="ui orange basic label">
                     <div class="ui images" style="font-size: inherit !important;">
                         <div class="image">
-                            <img src="../static/images/wechat.jpg" alt="" class="ui rounded bordered image"
+                            <img src="../static/images/wechat.jpg" th:src="@{/images/wechat.jpg}" alt=""
+                                 class="ui rounded bordered image"
                                  style="width: 120px">
                             <div>支付宝</div>
                         </div>
                         <div class="image">
-                            <img src="../static/images/wechat.jpg" alt="" class="ui rounded bordered image"
+                            <img src="../static/images/wechat.jpg" th:src="@{/images/wechat.jpg}" alt=""
+                                 class="ui rounded bordered image"
                                  style="width: 120px">
                             <div>微信</div>
                         </div>
@@ -109,8 +111,10 @@
             <div class="ui middle aligned grid">
                 <div class="eleven wide column">
                     <ui class="list">
-                        <li>作者：<span th:text="${blog.user.nickName}">杜世银</span>（联系作者）</li>
-                        <li><span th:text="${blog.updateTime}">发表时间：2017-10-02 09:08</span></li>
+                        <li>作者：<span th:text="${blog.user.nickName}">杜世银</span></li>
+                        <li><span
+                                th:text="${#dates.format(blog.updateTime,'yyyy-MM-dd HH:mm')}">发表时间：2017-10-02 09:08</span>
+                        </li>
                         <li>版权声明：自由转载-非商用-非衍生-保持署名（创意共享3.0许可证）</li>
                         <li>公众号转载：请在文末添加作者公众号二维码</li>
                     </ui>
@@ -198,7 +202,11 @@
                     </div>
                 </div>
             </div>
+
+
             <div class="ui form">
+                <input type="text" name="blog.blogId" th:value="${blog.blogId}">
+                <input type="text" name="parentComment.commentId" value="-1">
                 <div class="field">
                     <textarea name="content" placeholder="请输入评论信息..."></textarea>
                 </div>
@@ -206,7 +214,7 @@
                     <div class="field m-mobile-wide m-margin-bottom-small">
                         <div class="ui left icon input">
                             <i class="user icon"></i>
-                            <input type="text" name="nickname" placeholder="姓名">
+                            <input type="text" name="nickName" placeholder="姓名">
                         </div>
                     </div>
                     <div class="field m-mobile-wide m-margin-bottom-small">
@@ -216,11 +224,15 @@
                         </div>
                     </div>
                     <div class="field  m-margin-bottom-small m-mobile-wide">
-                        <button class="ui teal button m-mobile-wide"><i class="edit icon"></i>发布</button>
+                        <button type="button" id="commentpost-btn" class="ui teal button m-mobile-wide"><i
+                                class="edit icon"></i>发布
+                        </button>
                     </div>
                 </div>
 
             </div>
+
+
         </div>
     </div>
 </div>
@@ -254,7 +266,8 @@
             <div class="three wide column">
                 <div class="ui inverted link list">
                     <div class="item">
-                        <img src="../static/images/wechat.jpg" class="ui rounded image" alt="" style="width: 110px">
+                        <img src="../static/images/wechat.jpg" th:src="@{/images/wechat.jpg}" class="ui rounded image"
+                             alt="" style="width: 110px">
                     </div>
                 </div>
             </div>
@@ -296,7 +309,7 @@
 <!--/*/</th:block>/*/-->
 
 
-<script>
+<script th:inline="javascript">
 
     $('.menu.toggle').click(function () {
         $('.m-item').toggleClass('m-mobile-hide');
@@ -328,8 +341,10 @@
         position: 'left center'
     });
 
+    var serurl = "127.0.0.1:8080";
+    var url = /*[[@{/blog/{id}(id=${blog.blogId})}]]*/"";
     var qrcode = new QRCode("qrcode", {
-        text: "http://jindo.dev.naver.com/collie",
+        text: serurl + url,
         width: 110,
         height: 110,
         colorDark: "#000000",
@@ -352,7 +367,78 @@
             }
             console.log('Scrolled to waypoint!  ' + direction);
         }
-    })
+    });
+
+    //评论表单验证
+    $('.ui.form').form({
+        fields: {
+            title: {
+                identifier: 'content',
+                rules: [{
+                    type: 'empty',
+                    prompt: '请输入评论内容'
+                }
+                ]
+            },
+            content: {
+                identifier: 'nickName',
+                rules: [{
+                    type: 'empty',
+                    prompt: '请输入你的大名'
+                }]
+            },
+            type: {
+                identifier: 'email',
+                rules: [{
+                    type: 'email',
+                    prompt: '请填写正确的邮箱地址'
+                }]
+            }
+        }
+    });
+
+    $(function () {
+        $("#comment-container").load(/*[[@{/comments/{id}(id=${blog.id})}]]*/"comments/6");
+    });
+
+
+    $('#commentpost-btn').click(function () {
+        var boo = $('.ui.form').form('validate form');
+        if (boo) {
+            console.log('校验成功');
+            postData();
+        } else {
+            console.log('校验失败');
+        }
+    });
+
+    function postData() {
+        $("#comment-container").load(/*[[@{/comments}]]*/"", {
+            "parentComment.id": $("[name='parentComment.id']").val(),
+            "blog.id": $("[name='blog.id']").val(),
+            "nickName": $("[name='nickName']").val(),
+            "email": $("[name='email']").val(),
+            "content": $("[name='content']").val()
+        }, function (responseTxt, statusTxt, xhr) {
+//        $(window).scrollTo($('#comment-container'),500);
+            clearContent();
+        });
+    }
+
+    function clearContent() {
+        $("[name='content']").val('');
+        $("[name='parentComment.id']").val(-1);
+        $("[name='content']").attr("placeholder", "请输入评论信息...");
+    }
+
+    function reply(obj) {
+        var commentId = $(obj).data('commentid');
+        var commentNickname = $(obj).data('commentnickName');
+        $("[name='content']").attr("placeholder", "@" + commentNickname).focus();
+        $("[name='parentComment.id']").val(commentId);
+        $(window).scrollTo($('#comment-form'), 500);
+    }
+
 </script>
 </body>
 </html>

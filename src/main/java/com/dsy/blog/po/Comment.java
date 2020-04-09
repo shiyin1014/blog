@@ -5,6 +5,7 @@ import lombok.*;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Transient;
 import java.util.Date;
 
 /**
@@ -28,5 +29,12 @@ public class Comment {
     private String content;
     private String avatar;
     private Date createTime;
+    private Integer parentCommentId;
+
+    @Transient
+    private Comment parentComment;
+
+    @Transient
+    private Blog blog;
 
 }

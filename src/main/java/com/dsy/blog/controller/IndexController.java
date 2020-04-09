@@ -7,6 +7,7 @@ import com.dsy.blog.po.Tag;
 import com.dsy.blog.service.BlogService;
 import com.dsy.blog.service.TagService;
 import com.dsy.blog.service.TypeService;
+import com.dsy.blog.util.MarkDownUtils;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -76,14 +77,15 @@ public class IndexController {
     }
 
     /**
-     * 根据
+     * 根据博客id查询博客详情信息
      *
-     * @param id
+     * @param id 博客id
      * @return
      */
     @GetMapping(value = "/blog/{id}")
     public String blog(@PathVariable String id, Model model) {
         Blog blog = blogService.findBlogByBlogId(Integer.valueOf(id));
+        blog.setContent(MarkDownUtils.markdownToHtmlExtensions(blog.getContent()));
         model.addAttribute("blog", blog);
         List<Tag> tags = tagService.findTagsByBlogId(blog.getBlogId());
         model.addAttribute("tags", tags);
