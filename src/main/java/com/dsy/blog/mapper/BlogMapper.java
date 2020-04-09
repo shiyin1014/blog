@@ -23,18 +23,18 @@ public interface BlogMapper extends Mapper<Blog>{
             @Result(column = "first_picture",property = "firstPicture"),
             @Result(column = "flag",property = "flag"),
             @Result(column = "views",property = "views"),
-            @Result(column = "appreciation",property = "appreciation"),
-            @Result(column = "share_statement",property = "shareStatement"),
-            @Result(column = "comment",property = "comment"),
-            @Result(column = "publish",property = "publish"),
-            @Result(column = "recommend",property = "recommend"),
-            @Result(column = "update_time",property = "updateTime"),
-            @Result(column = "create_time",property = "createTime"),
-            @Result(column = "type_id",property = "type",
-                    one = @One(select = "com.dsy.blog.mapper.TypeMapper.selectTypeById",fetchType = FetchType.LAZY)),
-            @Result(column = "user_id",property = "user",
-                    one = @One(select = "com.dsy.blog.mapper.UserMapper.selectUserByUserId",fetchType = FetchType.LAZY))
-    })
+                    @Result(column = "appreciation", property = "appreciation"),
+                    @Result(column = "share_statement", property = "shareStatement"),
+                    @Result(column = "comment", property = "comment"),
+                    @Result(column = "publish", property = "publish"),
+                    @Result(column = "recommend", property = "recommend"),
+                    @Result(column = "update_time", property = "updateTime"),
+                    @Result(column = "create_time", property = "createTime"),
+                    @Result(column = "type_id", property = "type",
+                            one = @One(select = "com.dsy.blog.mapper.TypeMapper.selectTypeById", fetchType = FetchType.LAZY)),
+                    @Result(column = "user_id", property = "user",
+                            one = @One(select = "com.dsy.blog.mapper.UserMapper.selectUserByUserId", fetchType = FetchType.LAZY))
+            })
     List<Blog> findBlogAll();
 
 
@@ -43,7 +43,9 @@ public interface BlogMapper extends Mapper<Blog>{
                                   @Param(value = "recommend") String recommend);
 
 
-
+    @Select("select * from blog where blog_id = #{id}")
+    @ResultMap(value = "blogMap")
+    Blog selectBlogByBlogId(@Param(value = "id") String id);
 
 
 }

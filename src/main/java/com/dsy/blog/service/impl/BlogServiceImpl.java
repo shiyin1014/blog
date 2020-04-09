@@ -38,7 +38,7 @@ public class BlogServiceImpl implements BlogService {
 
     @Override
     public Blog findBlogByBlogId(Integer id) {
-        return blogMapper.selectByPrimaryKey(id);
+        return blogMapper.selectBlogByBlogId(String.valueOf(id));
     }
 
     @Transactional
@@ -120,13 +120,27 @@ public class BlogServiceImpl implements BlogService {
     @Override
     public String findTagsByBlogId(Integer blogId) {
         Example example = new Example(BlogTag.class);
-        example.createCriteria().andEqualTo("blogId",blogId);
+        example.createCriteria().andEqualTo("blogId", blogId);
         List<BlogTag> blogTags = blogTagMapper.selectByExample(example);
         StringBuffer buffer = new StringBuffer();
-        for (BlogTag tag: blogTags){
+        for (BlogTag tag : blogTags) {
             buffer.append(tag.getTagId()).append(",");
         }
-        buffer.deleteCharAt(buffer.length()-1);
+        buffer.deleteCharAt(buffer.length() - 1);
         return String.valueOf(buffer);
+    }
+
+    @Override
+    public List<Blog> findTheLastBlog(int i) {
+        Example example = new Example(Blog.class);
+        example.setOrderByClause("update_time desc limit " + i);
+        return blogMapper.selectByExample(example);
+    }
+
+    @Override
+    public Page<Blog> findBlogByKeyWords(String key) {
+//        Example example = new Example(Blog.class);
+//        example.createCriteria().andLike("title","%"+key+"%");
+        return (Page<Blog>) blogMapper.findBlogByKeyWords(key, null, null);
     }
 }

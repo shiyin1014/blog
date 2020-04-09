@@ -2,6 +2,7 @@ package com.dsy.blog.service.impl;
 
 import com.dsy.blog.mapper.BlogTagMapper;
 import com.dsy.blog.mapper.TagMapper;
+import com.dsy.blog.modelEntity.TagTops;
 import com.dsy.blog.po.BlogTag;
 import com.dsy.blog.po.Tag;
 import com.dsy.blog.service.TagService;
@@ -90,10 +91,28 @@ public class TagServiceImpl implements TagService {
     public List<Tag> listTag(String ids) {
         String[] split = ids.split(",");
         List<Tag> tags = new ArrayList<>();
-        for (String tag : split){
+        for (String tag : split) {
             Tag selectByPrimaryKey = tagMapper.selectByPrimaryKey(tag);
             tags.add(selectByPrimaryKey);
         }
         return tags;
+    }
+
+    @Override
+    public List<TagTops> findSeveralTopTags(int number) {
+        return tagMapper.findSeveralTopTags(number);
+    }
+
+    @Override
+    public List<Tag> findTagsByBlogId(Integer blogId) {
+        Example example = new Example(BlogTag.class);
+        example.createCriteria().andEqualTo("blogId", blogId);
+        List<BlogTag> blogTags = blogTagMapper.selectByExample(example);
+        List<Tag> list = new ArrayList<>();
+        for (BlogTag blogTag : blogTags) {
+            Tag tag = tagMapper.selectByPrimaryKey(blogTag.getTagId());
+            list.add(tag);
+        }
+        return list;
     }
 }

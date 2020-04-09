@@ -6,6 +6,8 @@ import javax.annotation.Generated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Transient;
+import java.util.List;
 
 /**
  * Created on 2020/4/3
@@ -21,7 +23,10 @@ import javax.persistence.Id;
 public class Tag {
 
     @Id
-    @GeneratedValue(strategy= GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer tagId;
     private String name;
+
+    @Transient
+    private List<Blog> blogList;
 }

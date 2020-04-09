@@ -1,6 +1,8 @@
 package com.dsy.blog;
 
 import com.dsy.blog.mapper.BlogMapper;
+import com.dsy.blog.modelEntity.TagTops;
+import com.dsy.blog.modelEntity.TypeTops;
 import com.dsy.blog.po.Blog;
 import com.dsy.blog.po.Tag;
 import com.dsy.blog.po.Type;
@@ -37,6 +39,7 @@ class BlogApplicationTests {
 
     @Autowired
     private BlogMapper blogMapper;
+
 
     @Test
     void testGetTypeByName(){
@@ -93,13 +96,39 @@ class BlogApplicationTests {
     }
 
     @Test
-    public void findTagsByBlogId(){
+    public void findTagsByBlogId() {
         String tags = blogService.findTagsByBlogId(8);
         System.out.println(tags);
     }
 
     @Test
-    public void deleteBlog(){
+    public void deleteBlog() {
         blogService.deleteBlog(12);
+    }
+
+
+    @Test
+    public void findSeveralTypes() {
+        List<TypeTops> types = typeService.findSeveralTypes(5);
+        System.out.println(types);
+    }
+
+    @Test
+    public void findSeveralTopTags() {
+        List<TagTops> topTags = tagService.findSeveralTopTags(2);
+        System.out.println(topTags);
+    }
+
+    @Test
+    public void findTheLastBlog() {
+        List<Blog> theLastBlog = blogService.findTheLastBlog(2);
+        System.out.println(theLastBlog);
+    }
+
+
+    @Test
+    public void findTagsListByBlogId() {
+        List<Tag> tagsByBlogId = tagService.findTagsByBlogId(8);
+        System.out.println(tagsByBlogId);
     }
 }

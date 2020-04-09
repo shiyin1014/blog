@@ -5,6 +5,8 @@ import lombok.*;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Transient;
+import java.util.List;
 
 /**
  * Created on 2020/4/3
@@ -23,4 +25,7 @@ public class Type {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer typeId;
     private String name;
+
+    @Transient
+    private List<Blog> blogList;
 }

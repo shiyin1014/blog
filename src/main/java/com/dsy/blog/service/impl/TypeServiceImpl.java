@@ -3,6 +3,7 @@ package com.dsy.blog.service.impl;
 import com.dsy.blog.exception.NotFoundException;
 import com.dsy.blog.mapper.BlogMapper;
 import com.dsy.blog.mapper.TypeMapper;
+import com.dsy.blog.modelEntity.TypeTops;
 import com.dsy.blog.po.Blog;
 import com.dsy.blog.po.Type;
 import com.dsy.blog.service.TypeService;
@@ -76,12 +77,17 @@ public class TypeServiceImpl implements TypeService {
     @Override
     public Type getTypeByName(String typeName) {
         Example example = new Example(Type.class);
-        example.createCriteria().andEqualTo("name",typeName);
+        example.createCriteria().andEqualTo("name", typeName);
         return typeMapper.selectOneByExample(example);
     }
 
     @Override
     public List<Type> allType() {
         return typeMapper.selectAll();
+    }
+
+    @Override
+    public List<TypeTops> findSeveralTypes(Integer number) {
+        return typeMapper.selectSeveralTopTypes(number);
     }
 }

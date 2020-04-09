@@ -1,5 +1,6 @@
 package com.dsy.blog.service;
 
+import com.dsy.blog.modelEntity.TypeTops;
 import com.dsy.blog.po.Type;
 import com.github.pagehelper.Page;
 
@@ -26,5 +27,7 @@ public interface TypeService {
     Type getTypeByName(String typeName);
 
     List<Type> allType();
+
+    List<TypeTops> findSeveralTypes(Integer number);
 }
 

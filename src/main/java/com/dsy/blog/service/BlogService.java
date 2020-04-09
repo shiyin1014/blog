@@ -26,6 +26,9 @@ public interface BlogService {
 
     Page<Blog> selectBlogByKeyWords(String title, String typeId, String recommend);
 
-    String  findTagsByBlogId(Integer blogId);
+    String findTagsByBlogId(Integer blogId);
 
+    List<Blog> findTheLastBlog(int i);
+
+    Page<Blog> findBlogByKeyWords(String key);
 }

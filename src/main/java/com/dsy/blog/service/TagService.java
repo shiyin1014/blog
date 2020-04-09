@@ -1,5 +1,6 @@
 package com.dsy.blog.service;
 
+import com.dsy.blog.modelEntity.TagTops;
 import com.dsy.blog.po.Tag;
 import com.github.pagehelper.Page;
 
@@ -29,4 +30,7 @@ public interface TagService {
 
     List<Tag> listTag(String ids);
 
+    List<TagTops> findSeveralTopTags(int number);
+
+    List<Tag> findTagsByBlogId(Integer blogId);
 }
