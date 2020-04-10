@@ -2,7 +2,6 @@ package com.dsy.blog.mapper;
 
 import com.dsy.blog.modelEntity.TagTops;
 import com.dsy.blog.po.Tag;
-import org.apache.ibatis.annotations.Many;
 import org.apache.ibatis.annotations.Result;
 import org.apache.ibatis.annotations.Results;
 import org.apache.ibatis.annotations.Select;

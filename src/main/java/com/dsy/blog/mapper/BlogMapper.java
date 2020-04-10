@@ -51,5 +51,9 @@ public interface BlogMapper extends Mapper<Blog>{
     @ResultMap(value = "blogMap")
     List<Blog> selectBlogByTypeId(@Param(value = "typeId") Integer typeId);
 
+    @Select("select date_format(b.update_time,'%Y') as year from blog b group by year order by year desc")
+    List<String> findYearsGroupByYear();
 
+    @Select("select  * from blog b where date_format(b.update_time,'%Y') = #{year}")
+    List<Blog> selectBlogByYear(@Param(value = "year") String year);
 }

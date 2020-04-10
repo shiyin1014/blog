@@ -1,6 +1,6 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="_fragments :: head(~{::title})">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>归档</title>
@@ -9,18 +9,18 @@
 </head>
 <body>
 
-  <!--导航-->
-  <nav class="ui inverted attached segment m-padded-tb-mini m-shadow-small" >
-    <div class="ui container">
-      <div class="ui inverted secondary stackable menu">
-        <h2 class="ui teal header item">Blog</h2>
-        <a href="#" class=" m-item item m-mobile-hide"><i class="mini home icon"></i>首页</a>
-        <a href="#" class="m-item item m-mobile-hide"><i class="mini idea icon"></i>分类</a>
-        <a href="#" class=" m-item item m-mobile-hide"><i class="mini tags icon"></i>标签</a>
-        <a href="#" class="active m-item item m-mobile-hide"><i class="mini clone icon"></i>归档</a>
-        <a href="#" class="m-item item m-mobile-hide"><i class="mini info icon"></i>关于我</a>
-        <div class="right m-item item m-mobile-hide">
-          <div class="ui icon inverted transparent input m-margin-tb-tiny">
+<!--导航-->
+<nav th:replace="_fragments :: menu(4)" class="ui inverted attached segment m-padded-tb-mini m-shadow-small">
+  <div class="ui container">
+    <div class="ui inverted secondary stackable menu">
+      <h2 class="ui teal header item">Blog</h2>
+      <a href="#" class=" m-item item m-mobile-hide"><i class="mini home icon"></i>首页</a>
+      <a href="#" class="m-item item m-mobile-hide"><i class="mini idea icon"></i>分类</a>
+      <a href="#" class=" m-item item m-mobile-hide"><i class="mini tags icon"></i>标签</a>
+      <a href="#" class="active m-item item m-mobile-hide"><i class="mini clone icon"></i>归档</a>
+      <a href="#" class="m-item item m-mobile-hide"><i class="mini info icon"></i>关于我</a>
+      <div class="right m-item item m-mobile-hide">
+        <div class="ui icon inverted transparent input m-margin-tb-tiny">
             <input type="text" placeholder="Search....">
             <i class="search link icon"></i>
           </div>
@@ -42,74 +42,25 @@
             <h3 class="ui teal header">归档</h3>
           </div>
           <div class="right aligned column">
-            共 <h2 class="ui orange header m-inline-block m-text-thin"> 114 </h2> 篇博客
+            共 <h2 class="ui orange header m-inline-block m-text-thin" th:text="${count}"> 114 </h2> 篇博客
           </div>
         </div>
       </div>
 
-      <h3 class="ui center aligned header">2017</h3>
-      <div class="ui fluid vertical menu">
-        <a href="#" target="_blank" class="item">
+      <th:block th:each="item : ${map}">
+        <h3 class="ui center aligned header" th:text="${item.key}">2017</h3>
+        <div class="ui fluid vertical menu">
+          <a href="#" th:href="@{/blog/{id}(id=${blog.blogId})}" target="_blank" class="item"
+             th:each="blog : ${item.value}">
           <span>
-            <i class="mini teal circle icon"></i>关于刻意练习的清单
-            <div class="ui teal basic left pointing label m-padded-mini ">9月03</div>
+            <i class="mini teal circle icon"></i><span th:text="${blog.title}">关于刻意练习的清单</span>
+            <div class="ui teal basic left pointing label m-padded-mini "
+                 th:text="${#dates.format(blog.updateTime,'MM-dd')}">9月03</div>
           </span>
-          <div class="ui orange basic left pointing label m-padded-mini ">原创</div>
-        </a>
-        <a href="#" target="_blank" class="item">
-          <span>
-            <i class="mini teal circle icon"></i>关于刻意练习的清单
-            <div class="ui teal basic left pointing label m-padded-mini ">9月03</div>
-          </span>
-          <div class="ui orange basic left pointing label m-padded-mini ">原创</div>
-        </a>
-        <a href="#" target="_blank" class="item">
-          <span>
-            <i class="mini teal circle icon"></i>关于刻意练习的清单
-            <div class="ui teal basic left pointing label m-padded-mini ">9月03</div>
-          </span>
-          <div class="ui orange basic left pointing label m-padded-mini ">原创</div>
-        </a>
-        <a href="#" target="_blank" class="item">
-          <span>
-            <i class="mini teal circle icon"></i>关于刻意练习的清单
-            <div class="ui teal basic left pointing label m-padded-mini ">9月03</div>
-          </span>
-          <div class="ui orange basic left pointing label m-padded-mini ">原创</div>
-        </a>
-      </div>
-
-      <h3 class="ui center aligned header">2016</h3>
-      <div class="ui fluid vertical menu">
-        <a href="#" target="_blank" class="item">
-          <span>
-            <i class="mini teal circle icon"></i>关于刻意练习的清单
-            <div class="ui teal basic left pointing label m-padded-mini ">9月03</div>
-          </span>
-          <div class="ui orange basic left pointing label m-padded-mini ">原创</div>
-        </a>
-        <a href="#" target="_blank" class="item">
-          <span>
-            <i class="mini teal circle icon"></i>关于刻意练习的清单
-            <div class="ui teal basic left pointing label m-padded-mini ">9月03</div>
-          </span>
-          <div class="ui orange basic left pointing label m-padded-mini ">原创</div>
-        </a>
-        <a href="#" target="_blank" class="item">
-          <span>
-            <i class="mini teal circle icon"></i>关于刻意练习的清单
-            <div class="ui teal basic left pointing label m-padded-mini ">9月03</div>
-          </span>
-          <div class="ui orange basic left pointing label m-padded-mini ">原创</div>
-        </a>
-        <a href="#" target="_blank" class="item">
-          <span>
-            <i class="mini teal circle icon"></i>关于刻意练习的清单
-            <div class="ui teal basic left pointing label m-padded-mini ">9月03</div>
-          </span>
-          <div class="ui orange basic left pointing label m-padded-mini ">原创</div>
-        </a>
-      </div>
+            <div class="ui orange basic left pointing label m-padded-mini " th:text="${blog.flag}">原创</div>
+          </a>
+        </div>
+      </th:block>
 
 
     </div>
@@ -118,17 +69,17 @@
   <br>
   <br>
   <!--底部footer-->
-  <footer class="ui inverted vertical segment m-padded-tb-massive">
-    <div class="ui center aligned container">
-      <div class="ui inverted divided stackable grid">
-        <div class="three wide column">
-          <div class="ui inverted link list">
-            <div class="item">
-              <img src="../static/images/wechat.jpg" class="ui rounded image" alt="" style="width: 110px">
-            </div>
+<footer th:replace="_fragments :: footer" class="ui inverted vertical segment m-padded-tb-massive">
+  <div class="ui center aligned container">
+    <div class="ui inverted divided stackable grid">
+      <div class="three wide column">
+        <div class="ui inverted link list">
+          <div class="item">
+            <img src="../static/images/wechat.jpg" class="ui rounded image" alt="" style="width: 110px">
           </div>
         </div>
-        <div class="three wide column">
+      </div>
+      <div class="three wide column">
           <h4 class="ui inverted header m-text-thin m-text-spaced " >最新博客</h4>
           <div class="ui inverted link list">
             <a href="#" class="item m-text-thin">用户故事（User Story）</a>

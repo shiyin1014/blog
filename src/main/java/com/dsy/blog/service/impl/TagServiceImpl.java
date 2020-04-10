@@ -115,4 +115,9 @@ public class TagServiceImpl implements TagService {
         }
         return list;
     }
+
+    @Override
+    public Integer findCount() {
+        return tagMapper.selectCount(null);
+    }
 }

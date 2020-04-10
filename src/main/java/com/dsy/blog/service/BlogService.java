@@ -6,6 +6,7 @@ import com.dsy.blog.po.Type;
 import com.github.pagehelper.Page;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created on 2020/4/5
@@ -35,4 +36,9 @@ public interface BlogService {
 
     List<Blog> findBlogByTypeId(Integer typeId);
 
+    List<Blog> findBlogByTagId(Integer tagId);
+
+    Map<String, List<Blog>> findArchiveBlog();
+
+    Integer findBlogCount();
 }

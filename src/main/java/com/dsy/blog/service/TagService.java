@@ -33,4 +33,6 @@ public interface TagService {
     List<TagTops> findSeveralTopTags(int number);
 
     List<Tag> findTagsByBlogId(Integer blogId);
+
+    Integer findCount();
 }

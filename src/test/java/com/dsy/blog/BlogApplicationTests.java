@@ -167,4 +167,9 @@ class BlogApplicationTests {
         System.out.println(blogByTypeId);
     }
 
+    @Test
+    public void findArchiveBlog() {
+        blogService.findArchiveBlog();
+    }
+
 }

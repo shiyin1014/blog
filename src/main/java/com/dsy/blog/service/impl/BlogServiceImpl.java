@@ -5,14 +5,14 @@ import com.dsy.blog.mapper.BlogTagMapper;
 import com.dsy.blog.mapper.CommentMapper;
 import com.dsy.blog.po.*;
 import com.dsy.blog.service.BlogService;
+import com.dsy.blog.service.TagService;
 import com.github.pagehelper.Page;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import tk.mybatis.mapper.entity.Example;
 
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created on 2020/4/6
@@ -31,6 +31,9 @@ public class BlogServiceImpl implements BlogService {
 
     @Autowired
     private CommentMapper commentMapper;
+
+    @Autowired
+    private TagService tagService;
 
 
     @Override
@@ -143,6 +146,42 @@ public class BlogServiceImpl implements BlogService {
 
     @Override
     public List<Blog> findBlogByTypeId(Integer typeId) {
-        return blogMapper.selectBlogByTypeId(typeId);
+        List<Blog> blogList = blogMapper.selectBlogByTypeId(typeId);
+        for (Blog blog : blogList) {
+            List<Tag> tags = tagService.findTagsByBlogId(blog.getBlogId());
+            blog.setTags(tags);
+        }
+        return blogList;
+    }
+
+    @Override
+    public List<Blog> findBlogByTagId(Integer tagId) {
+        List<Blog> blogList = new ArrayList<>();
+        Example example = new Example(BlogTag.class);
+        example.createCriteria().andEqualTo("TagId", tagId);
+        List<BlogTag> blogTags = blogTagMapper.selectByExample(example);
+        for (BlogTag blogTag : blogTags) {
+            Blog blog = blogMapper.selectBlogByBlogId(String.valueOf(blogTag.getBlogId()));
+            List<Tag> tags = tagService.findTagsByBlogId(blog.getBlogId());
+            blog.setTags(tags);
+            blogList.add(blog);
+        }
+        return blogList;
+    }
+
+    @Override
+    public Map<String, List<Blog>> findArchiveBlog() {
+        Map<String, List<Blog>> map = new HashMap<>(16);
+        List<String> years = blogMapper.findYearsGroupByYear();
+        for (String year : years) {
+            List<Blog> list = blogMapper.selectBlogByYear(year);
+            map.put(year, list);
+        }
+        return map;
+    }
+
+    @Override
+    public Integer findBlogCount() {
+        return blogMapper.selectCount(null);
     }
 }
