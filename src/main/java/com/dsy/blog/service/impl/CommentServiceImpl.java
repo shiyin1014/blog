@@ -58,12 +58,10 @@ public class CommentServiceImpl implements CommentService {
 
     @Transactional
     @Override
-    public Comment saveComment(Comment comment) {
+    public void saveComment(Comment comment) {
         comment.setCreateTime(new Date());
         int insert = commentMapper.insert(comment);
         if (insert == 1) {
-            return comment;
         }
-        return null;
     }
 }

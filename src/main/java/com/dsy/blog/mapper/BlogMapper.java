@@ -47,5 +47,9 @@ public interface BlogMapper extends Mapper<Blog>{
     @ResultMap(value = "blogMap")
     Blog selectBlogByBlogId(@Param(value = "id") String id);
 
+    @Select("select * from blog where type_id = #{typeId}")
+    @ResultMap(value = "blogMap")
+    List<Blog> selectBlogByTypeId(@Param(value = "typeId") Integer typeId);
+
 
 }

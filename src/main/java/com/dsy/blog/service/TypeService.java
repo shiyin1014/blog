@@ -29,5 +29,7 @@ public interface TypeService {
     List<Type> allType();
 
     List<TypeTops> findSeveralTypes(Integer number);
+
+    Integer findCount();
 }
 

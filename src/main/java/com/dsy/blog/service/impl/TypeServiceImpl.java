@@ -90,4 +90,11 @@ public class TypeServiceImpl implements TypeService {
     public List<TypeTops> findSeveralTypes(Integer number) {
         return typeMapper.selectSeveralTopTypes(number);
     }
+
+    @Override
+    public Integer findCount() {
+        return typeMapper.selectCount(null);
+    }
+
+
 }

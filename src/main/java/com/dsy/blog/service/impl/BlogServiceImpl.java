@@ -3,10 +3,7 @@ package com.dsy.blog.service.impl;
 import com.dsy.blog.mapper.BlogMapper;
 import com.dsy.blog.mapper.BlogTagMapper;
 import com.dsy.blog.mapper.CommentMapper;
-import com.dsy.blog.po.Blog;
-import com.dsy.blog.po.BlogTag;
-import com.dsy.blog.po.Comment;
-import com.dsy.blog.po.Tag;
+import com.dsy.blog.po.*;
 import com.dsy.blog.service.BlogService;
 import com.github.pagehelper.Page;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -142,5 +139,10 @@ public class BlogServiceImpl implements BlogService {
 //        Example example = new Example(Blog.class);
 //        example.createCriteria().andLike("title","%"+key+"%");
         return (Page<Blog>) blogMapper.findBlogByKeyWords(key, null, null);
+    }
+
+    @Override
+    public List<Blog> findBlogByTypeId(Integer typeId) {
+        return blogMapper.selectBlogByTypeId(typeId);
     }
 }

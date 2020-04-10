@@ -155,4 +155,16 @@ class BlogApplicationTests {
         System.out.println(avatar);
     }
 
+    @Test
+    public void testCount() {
+        Integer count = typeService.findCount();
+        System.out.println(count);
+    }
+
+    @Test
+    void selectBlogByTypeId() {
+        List<Blog> blogByTypeId = blogService.findBlogByTypeId(12);
+        System.out.println(blogByTypeId);
+    }
+
 }

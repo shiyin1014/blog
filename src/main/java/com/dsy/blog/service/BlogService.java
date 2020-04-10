@@ -2,6 +2,7 @@ package com.dsy.blog.service;
 
 import com.dsy.blog.po.Blog;
 import com.dsy.blog.po.BlogTag;
+import com.dsy.blog.po.Type;
 import com.github.pagehelper.Page;
 
 import java.util.List;
@@ -31,4 +32,7 @@ public interface BlogService {
     List<Blog> findTheLastBlog(int i);
 
     Page<Blog> findBlogByKeyWords(String key);
+
+    List<Blog> findBlogByTypeId(Integer typeId);
+
 }

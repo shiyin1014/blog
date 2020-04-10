@@ -14,5 +14,5 @@ public interface CommentService {
 
     List<Comment> findCommentsByBlogId(Integer blogId);
 
-    Comment saveComment(Comment comment);
+    void saveComment(Comment comment);
 }
