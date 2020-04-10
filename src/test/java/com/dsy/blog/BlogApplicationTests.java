@@ -4,9 +4,11 @@ import com.dsy.blog.mapper.BlogMapper;
 import com.dsy.blog.modelEntity.TagTops;
 import com.dsy.blog.modelEntity.TypeTops;
 import com.dsy.blog.po.Blog;
+import com.dsy.blog.po.Comment;
 import com.dsy.blog.po.Tag;
 import com.dsy.blog.po.Type;
 import com.dsy.blog.service.BlogService;
+import com.dsy.blog.service.CommentService;
 import com.dsy.blog.service.TagService;
 import com.dsy.blog.service.TypeService;
 import com.github.pagehelper.Page;
@@ -14,8 +16,10 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.io.File;
 import java.lang.management.GarbageCollectorMXBean;
 import java.util.List;
 
@@ -36,13 +40,16 @@ class BlogApplicationTests {
     @Autowired
     private BlogService blogService;
 
+    @Autowired
+    private CommentService commentService;
+
 
     @Autowired
     private BlogMapper blogMapper;
 
 
     @Test
-    void testGetTypeByName(){
+    void testGetTypeByName() {
         Type type = typeService.getTypeByName("1");
         System.out.println(type);
 
@@ -131,4 +138,21 @@ class BlogApplicationTests {
         List<Tag> tagsByBlogId = tagService.findTagsByBlogId(8);
         System.out.println(tagsByBlogId);
     }
+
+    @Test
+    public void findCommentsByBlogId() {
+        List<Comment> comments = commentService.findCommentsByBlogId(8);
+        for (Comment list : comments) {
+            System.out.println(list);
+        }
+    }
+
+    @Value(value = "${avatar}")
+    private String avatar;
+
+    @Test
+    public void test() {
+        System.out.println(avatar);
+    }
+
 }

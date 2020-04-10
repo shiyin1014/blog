@@ -19,7 +19,7 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-public class Comment {
+public class Comment implements Comparable<Comment> {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer commentId;
@@ -31,10 +31,8 @@ public class Comment {
     private Date createTime;
     private Integer parentCommentId;
 
-    @Transient
-    private Comment parentComment;
-
-    @Transient
-    private Blog blog;
-
+    @Override
+    public int compareTo(Comment o) {
+        return this.commentId - o.commentId;
+    }
 }
