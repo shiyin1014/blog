@@ -5,7 +5,7 @@
 **技术组合：**
 
 * 后端：Spring Boot + Mybatis + thymeleaf模板
-* 数据库：MySQL+Druid
+* 数据库：MySQL
 * 前端UI：Semantic UI框架
 
 **工具与环境：**
