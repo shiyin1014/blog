@@ -79,7 +79,7 @@
             </div>
 
             <!--赞赏-->
-            <div class="ui center aligned basic segment">
+            <div class="ui center aligned basic segment" th:if="${blog.appreciation}">
                 <button id="payButton" class="ui orange basic circular button">赞赏</button>
             </div>
             <div class="ui payQR flowing popup transition hidden">
@@ -100,7 +100,8 @@
             </div>
 
         </div>
-        <div class="ui attached positive message">
+
+        <div class="ui attached positive message" th:if="${blog.shareStatement}">
             <!--博客信息-->
             <div class="ui middle aligned grid">
                 <div class="eleven wide column">
@@ -120,8 +121,9 @@
                 </div>
             </div>
         </div>
-        <div class="ui bottom attached segment">
-            <!--留言区域列表-->
+
+        <!--留言区域列表-->
+        <div class="ui bottom attached segment" th:if="${blog.comment}">
             <div id="comment-container" class="ui teal segment">
                 <div th:fragment="commentList">
                     <div class="ui threaded comments" style="max-width: 100%;">
@@ -222,6 +224,8 @@
 
             </div>
         </div>
+
+
     </div>
 </div>
 
@@ -287,7 +291,7 @@
 <!--/*/<th:block th:replace="_fragments :: script">/*/-->
 <script src="https://cdn.jsdelivr.net/npm/jquery@3.2/dist/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/semantic-ui/2.2.4/semantic.min.js"></script>
-<script src="//cdn.jsdelivr.net/npm/jquery.scrollto@2.1.2/jquery.scrollTo.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery.scrollto@2.1.2/jquery.scrollTo.min.js"></script>
 
 <script src="../static/lib/prism/prism.js"></script>
 <script src="../static/lib/tocbot/tocbot.min.js"></script>

@@ -112,9 +112,11 @@
           <tfoot>
           <tr>
             <th colspan="7">
-              <div class="ui mini pagination menu" th:if="${pageInfo.total}>2">
-                <a class=" item" onclick="page(this)" th:attr="data-page=${pageInfo.pageNum}-1"  th:unless="${pageInfo.pageNum==1}">上一页</a>
-                <a class=" item" onclick="page(this)" th:attr="data-page=${pageInfo.pageNum}+1" th:unless="${pageInfo.pageNum==pageInfo.pages}">下一页</a>
+              <div class="ui mini pagination menu" th:if="${pageInfo.total}>${pageInfo.pageSize}">
+                <a class=" item" onclick="page(this)" th:attr="data-page=${pageInfo.pageNum}-1"
+                   th:unless="${pageInfo.pageNum==1}">上一页</a>
+                <a class=" item" onclick="page(this)" th:attr="data-page=${pageInfo.pageNum}+1"
+                   th:unless="${pageInfo.pageNum==pageInfo.pages}">下一页</a>
               </div>
               <a href="#" th:href="@{/admin/blogs/addPage}" class="ui mini right floated teal basic button">新增</a>
             </th>

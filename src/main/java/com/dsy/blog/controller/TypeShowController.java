@@ -36,7 +36,7 @@ public class TypeShowController {
         Integer count = typeService.findCount();
         List<TypeTops> types = typeService.findSeveralTypes(count);
         model.addAttribute("types", types);
-        PageHelper.startPage(Integer.parseInt(page), 6);
+        PageHelper.startPage(Integer.parseInt(page), 5);
         if (typeId == -1) {
             typeId = types.get(0).getTypeId();
         }

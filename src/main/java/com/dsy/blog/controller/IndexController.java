@@ -40,7 +40,7 @@ public class IndexController {
     @RequestMapping("/")
     public String index(@RequestParam(value = "page", required = false, defaultValue = "1") String page,
                         Model model) {
-        PageHelper.startPage(Integer.parseInt(page), 10);
+        PageHelper.startPage(Integer.parseInt(page), 5);
         Page<Blog> blogPage = blogService.findAllBlogByPage();
         PageInfo<Blog> pageInfo = new PageInfo<>(blogPage);
         model.addAttribute("pageInfo", pageInfo);
@@ -85,10 +85,21 @@ public class IndexController {
     @GetMapping(value = "/blog/{id}")
     public String blog(@PathVariable String id, Model model) {
         Blog blog = blogService.findBlogByBlogId(Integer.valueOf(id));
+        //增加浏览次数
+        blog.setViews(blog.getViews() + 1);
+        blogService.addBlogViews(blog);
         blog.setContent(MarkDownUtils.markdownToHtmlExtensions(blog.getContent()));
         model.addAttribute("blog", blog);
         List<Tag> tags = tagService.findTagsByBlogId(blog.getBlogId());
         model.addAttribute("tags", tags);
         return "blog";
     }
+
+
+    @GetMapping(value = "/footer/newBlogs")
+    public String newBlogs(Model model) {
+        model.addAttribute("newBlogs", blogService.findTheLastBlog(3));
+        return "_fragments :: newBlogList";
+    }
+
 }

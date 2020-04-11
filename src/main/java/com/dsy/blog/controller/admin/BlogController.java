@@ -44,7 +44,7 @@ public class BlogController {
 
     @GetMapping("/blogs")
     public String blogs(Model model, @RequestParam(required = false, defaultValue = "1") String page) {
-        PageHelper.startPage(Integer.parseInt(page), 2);
+        PageHelper.startPage(Integer.parseInt(page), 8);
         Page<Blog> blogPage = blogService.findAllBlogByPage();
         PageInfo<Blog> pageInfo = new PageInfo<>(blogPage);
         model.addAttribute("pageInfo", pageInfo);
@@ -56,7 +56,7 @@ public class BlogController {
     @PostMapping("/blogs/search")
     public String search(Model model, @RequestParam(required = false, defaultValue = "1") String page,
                          String title, String typeId, Boolean recommend) {
-        PageHelper.startPage(Integer.parseInt(page), 2);
+        PageHelper.startPage(Integer.parseInt(page), 8);
         Page<Blog> blogPage = blogService.selectBlogByKeyWords(title.equalsIgnoreCase("") ? null : title
                 , typeId.equalsIgnoreCase("") ? null : typeId, recommend ? "1" : null);
         PageInfo<Blog> pageInfo = new PageInfo<>(blogPage);
@@ -130,10 +130,10 @@ public class BlogController {
         blog.setAppreciation(blog.getAppreciation()!=null);
         blog.setShareStatement(blog.getShareStatement()!=null);
         blog.setComment(blog.getComment()!=null);
-        blog.setType(typeService.getType(blog.getType().getTypeId()));
+//        blog.setType(typeService.getType(blog.getType().getTypeId()));
         blog.setTags(tagService.listTag(tagIds));
         blog.setUserId(user.getUserId());
-        blog.setTypeId(blog.getType().getTypeId());
+        blog.setTypeId(blog.getTypeId());
         Blog addBlog = blogService.addBlog(blog);
         if (addBlog != null) {
             attributes.addFlashAttribute("message", "操作成功");

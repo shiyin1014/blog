@@ -41,4 +41,6 @@ public interface BlogService {
     Map<String, List<Blog>> findArchiveBlog();
 
     Integer findBlogCount();
+
+    void addBlogViews(Blog blog);
 }

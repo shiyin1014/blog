@@ -184,4 +184,9 @@ public class BlogServiceImpl implements BlogService {
     public Integer findBlogCount() {
         return blogMapper.selectCount(null);
     }
+
+    @Override
+    public void addBlogViews(Blog blog) {
+        blogMapper.updateByPrimaryKeySelective(blog);
+    }
 }
