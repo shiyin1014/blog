@@ -10,6 +10,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import javax.sql.DataSource;
+import java.sql.SQLException;
 
 /**
  * Created on 2020/4/2
@@ -22,8 +23,10 @@ public class DruidConfig {
 
     @ConfigurationProperties("spring.datasource")
     @Bean
-    public DataSource druid(){
-        return new DruidDataSource();
+    public DataSource druid() throws SQLException {
+        DruidDataSource druidDataSource = new DruidDataSource();
+        druidDataSource.setFilters("stat");
+        return druidDataSource;
     }
 
     // 主要实现web监控的配置处理
