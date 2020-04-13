@@ -1,12 +1,12 @@
 spring:
   profiles:
-    active: dev
+    active: pro
 pagehelper:
   helperDialect: mysql
   reasonable: true
   supportMethodsArguments: true
 mybatis:
-  mapper-locations: classpath:/mybatis/mapper/**
+  mapper-locations: classpath:mybatis/mapper/*.xml
 
 
 avatar: https://images.unsplash.com/photo-1537815749002-de6a533c64db?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=845&q=80
