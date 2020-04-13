@@ -172,4 +172,30 @@ class BlogApplicationTests {
         blogService.findArchiveBlog();
     }
 
+    @Test
+    public void findAllBlog() {
+        List<Blog> allBlogByPage = blogService.findAllBlogByPage();
+        System.out.println(allBlogByPage.get(2));
+    }
+
+
+    @Test
+    public void selectSeveralTopTypes() {
+        List<TagTops> severalTopTags = tagService.findSeveralTopTags(6);
+        System.out.println(severalTopTags);
+    }
+
+    @Test
+    public void testTypeAdd() {
+        Type type = new Type();
+        type.setName("aaaaaaa");
+        typeService.saveType(type);
+
+    }
+
+    @Test
+    public void testDeleteTagById() {
+        tagService.deleteTagById(25);
+    }
+
 }

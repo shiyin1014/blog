@@ -36,12 +36,11 @@ public class IndexController {
     @Autowired
     private TagService tagService;
 
-
     @RequestMapping("/")
     public String index(@RequestParam(value = "page", required = false, defaultValue = "1") String page,
                         Model model) {
         PageHelper.startPage(Integer.parseInt(page), 5);
-        Page<Blog> blogPage = blogService.findAllBlogByPage();
+        List<Blog> blogPage = blogService.findAllBlogByPage();
         PageInfo<Blog> pageInfo = new PageInfo<>(blogPage);
         model.addAttribute("pageInfo", pageInfo);
         //type

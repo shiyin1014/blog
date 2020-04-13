@@ -65,7 +65,7 @@
         <div id="newblog-container">
           <div class="ui inverted link list" th:fragment="newBlogList">
             <a href="#" th:href="@{/blog/{id}(id=${blog.blogId})}" target="_blank" class="item m-text-thin"
-               th:each="blog : ${newBlogs}" th:text="${blog.title}">用户故事（User Story）</a>
+               th:each="blog,stat : ${newBlogs}" th:if="${stat.index<3}" th:text="${blog.title}">用户故事（User Story）</a>
           </div>
         </div>
       </div>
@@ -98,6 +98,8 @@
   <script src="../static/lib/qrcode/qrcode.min.js" th:src="@{/lib/qrcode/qrcode.min.js}"></script>
   <script src="../static/lib/waypoints/jquery.waypoints.min.js"
           th:src="@{/lib/waypoints/jquery.waypoints.min.js}"></script>
+  <script src="../../static/lib/editormd/editormd.min.js" th:src="@{/lib/editormd/editormd.min.js}"
+          type="text/javascript"></script>
 
   <script>
     $('#newblog-container').load(/*[[@{/footer/newBlogs}]]*/"/footer/newBlogs");

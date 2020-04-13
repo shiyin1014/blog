@@ -1,5 +1,6 @@
 package com.dsy.blog.po;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
 
 import javax.persistence.GeneratedValue;
@@ -20,7 +21,8 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-public class Blog {
+//@JsonIgnoreProperties(value = {"handler"})
+public class Blog implements Comparable<Blog> {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer blogId;
@@ -48,4 +50,9 @@ public class Blog {
 
     @Transient
     protected List<Tag> tags;
+
+    @Override
+    public int compareTo(Blog o) {
+        return o.getUpdateTime().compareTo(this.updateTime);
+    }
 }

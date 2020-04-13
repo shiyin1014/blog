@@ -1,8 +1,9 @@
 package com.dsy.blog.mapper;
 
 import com.dsy.blog.po.Blog;
+import com.dsy.blog.po.Type;
+import com.dsy.blog.po.User;
 import org.apache.ibatis.annotations.*;
-import org.apache.ibatis.mapping.FetchType;
 import tk.mybatis.mapper.common.Mapper;
 
 import java.util.List;
@@ -20,9 +21,9 @@ public interface BlogMapper extends Mapper<Blog>{
             value = {
             @Result(column = "title",property = "title"),
             @Result(column = "content",property = "content"),
-            @Result(column = "first_picture",property = "firstPicture"),
-            @Result(column = "flag",property = "flag"),
-            @Result(column = "views",property = "views"),
+                    @Result(column = "first_picture", property = "firstPicture"),
+                    @Result(column = "flag", property = "flag"),
+                    @Result(column = "views", property = "views"),
                     @Result(column = "appreciation", property = "appreciation"),
                     @Result(column = "share_statement", property = "shareStatement"),
                     @Result(column = "comment", property = "comment"),
@@ -30,10 +31,10 @@ public interface BlogMapper extends Mapper<Blog>{
                     @Result(column = "recommend", property = "recommend"),
                     @Result(column = "update_time", property = "updateTime"),
                     @Result(column = "create_time", property = "createTime"),
-                    @Result(column = "type_id", property = "type",
-                            one = @One(select = "com.dsy.blog.mapper.TypeMapper.selectTypeById", fetchType = FetchType.LAZY)),
-                    @Result(column = "user_id", property = "user",
-                            one = @One(select = "com.dsy.blog.mapper.UserMapper.selectUserByUserId", fetchType = FetchType.LAZY))
+                    @Result(column = "type_id", property = "type", javaType = Type.class,
+                            one = @One(select = "com.dsy.blog.mapper.TypeMapper.selectTypeById")),
+                    @Result(column = "user_id", property = "user", javaType = User.class,
+                            one = @One(select = "com.dsy.blog.mapper.UserMapper.selectUserByUserId"))
             })
     List<Blog> findBlogAll();
 

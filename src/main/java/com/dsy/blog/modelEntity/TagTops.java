@@ -13,9 +13,14 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-public class TagTops {
+public class TagTops implements Comparable<TagTops> {
 
     private Integer tagId;
     private String name;
     private Integer BlogNumber;
+
+    @Override
+    public int compareTo(TagTops o) {
+        return o.BlogNumber - this.BlogNumber;
+    }
 }

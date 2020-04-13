@@ -13,8 +13,13 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-public class TypeTops {
+public class TypeTops implements Comparable<TypeTops> {
     private Integer typeId;
     private String name;
     private Integer blogNumber;
+
+    @Override
+    public int compareTo(TypeTops o) {
+        return o.blogNumber - this.blogNumber;
+    }
 }

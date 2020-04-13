@@ -15,7 +15,8 @@ import java.util.List;
  */
 public interface TypeMapper extends Mapper<Type> {
 
-    @Select("select * from type where type_id = #{id}")
+    @Select(value = "select * from type where type_id = #{id}")
+    @ResultType(Type.class)
     Type selectTypeById(@Param(value = "id") String id);
 
     @Select("select distinct t.type_id,t.name,count(*) as number from type t,blog b " +

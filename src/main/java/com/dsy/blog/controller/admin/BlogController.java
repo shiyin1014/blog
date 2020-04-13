@@ -45,8 +45,8 @@ public class BlogController {
     @GetMapping("/blogs")
     public String blogs(Model model, @RequestParam(required = false, defaultValue = "1") String page) {
         PageHelper.startPage(Integer.parseInt(page), 8);
-        Page<Blog> blogPage = blogService.findAllBlogByPage();
-        PageInfo<Blog> pageInfo = new PageInfo<>(blogPage);
+        List<Blog> allBlogByPage = blogService.findAllBlogByPage();
+        PageInfo<Blog> pageInfo = new PageInfo<>(allBlogByPage);
         model.addAttribute("pageInfo", pageInfo);
         List<Type> types = typeService.allType();
         model.addAttribute("types", types);

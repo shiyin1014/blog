@@ -1,10 +1,9 @@
 package com.dsy.blog.service;
 
 import com.dsy.blog.po.Blog;
-import com.dsy.blog.po.BlogTag;
-import com.dsy.blog.po.Type;
 import com.github.pagehelper.Page;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -20,11 +19,9 @@ public interface BlogService {
 
     Blog addBlog(Blog blog);
 
-    Page<Blog> findAllBlogByPage();
+    List<Blog> findAllBlogByPage();
 
     Integer deleteBlog(Integer id);
-
-    Blog updateBlog(Blog blog);
 
     Page<Blog> selectBlogByKeyWords(String title, String typeId, String recommend);
 

@@ -72,17 +72,17 @@ public class TypeController {
     @PostMapping("types/input")
     public String post(Type type, BindingResult result, RedirectAttributes attributes){
         Type type1 = typeService.getTypeByName(type.getName());
-        if (type1!=null){
-            result.rejectValue("name","nameError","不能添加重复的分类名称");
+        if (type1 != null) {
+            result.rejectValue("name", "nameError", "不能添加重复的分类名称");
         }
-        if (result.hasErrors()){
+        if (result.hasErrors()) {
             return "/admin/types-input";
         }
-        Type t = typeService.saveType(type);
-        if (t == null){
-            attributes.addFlashAttribute("message","操作失败");
-        }else {
-            attributes.addFlashAttribute("message","操作成功");
+        Type type2 = typeService.saveType(type);
+        if (type2 == null) {
+            attributes.addFlashAttribute("message", "操作失败");
+        } else {
+            attributes.addFlashAttribute("message", "操作成功");
         }
         return "redirect:/admin/types";
     }
