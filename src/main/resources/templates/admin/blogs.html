@@ -113,10 +113,25 @@
           <tr>
             <th colspan="7">
               <div class="ui mini pagination menu" th:if="${pageInfo.total}>${pageInfo.pageSize}">
-                <a class=" item" onclick="page(this)" th:attr="data-page=${pageInfo.pageNum}-1"
-                   th:unless="${pageInfo.pageNum==1}">上一页</a>
-                <a class=" item" onclick="page(this)" th:attr="data-page=${pageInfo.pageNum}+1"
-                   th:unless="${pageInfo.pageNum==pageInfo.pages}">下一页</a>
+
+                <!--                调用search的分页-->
+                <div th:if="${flag}==null">
+                  <a class=" item" onclick="page(this)" th:attr="data-page=${pageInfo.pageNum}-1"
+                     th:unless="${pageInfo.pageNum==1}">上一页</a>
+                  <a class=" item" onclick="page(this)" th:attr="data-page=${pageInfo.pageNum}+1"
+                     th:unless="${pageInfo.pageNum==pageInfo.pages}">下一页</a>
+                </div>
+
+                <!--                调用blogs的分页-->
+                <div th:if="${flag}!=null">
+                  <a class=" item" th:href="@{/admin/blogs(page=${pageInfo.pageNum}-1)}"
+                     th:attr="data-page=${pageInfo.pageNum}-1"
+                     th:unless="${pageInfo.pageNum==1}">上一页</a>
+                  <a class=" item" th:href="@{/admin/blogs(page=${pageInfo.pageNum}+1)}"
+                     th:attr="data-page=${pageInfo.pageNum}+1"
+                     th:unless="${pageInfo.pageNum==pageInfo.pages}">下一页</a>
+                </div>
+
               </div>
               <a href="#" th:href="@{/admin/blogs/addPage}" class="ui mini right floated teal basic button">新增</a>
             </th>
@@ -200,8 +215,6 @@
                       .transition('fade');
             });
 
-
-
     function page(obj) {
       $("[name='page']").val($(obj).data("page"));
       loadData();
@@ -212,11 +225,11 @@
     });
 
     function loadData() {
-      $("#table-container").load(/*[[@{/admin/blogs/search}]]*/"/admin/blogs/search",{
-        title : $("[name='title']").val(),
-        typeId : $("[name='typeId']").val(),
-        recommend : $("[name='recommend']").prop('checked'),
-        page : $("[name='page']").val()
+      $("#table-container").load(/*[[@{/admin/blogs/search}]]*/"/admin/blogs/search", {
+        title: $("[name='title']").val(),
+        typeId: $("[name='typeId']").val(),
+        recommend: $("[name='recommend']").prop('checked'),
+        page: $("[name='page']").val()
       });
     }
 

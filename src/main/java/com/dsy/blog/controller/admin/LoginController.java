@@ -30,7 +30,7 @@ public class LoginController {
         return "admin/login";
     }
 
-    @PostMapping(value = "/login")
+    @PostMapping(value = "login")
     public String login(@RequestParam String username,
                         @RequestParam String password,
                         HttpSession session, RedirectAttributes attributes){
@@ -41,7 +41,7 @@ public class LoginController {
             return "admin/index";
         }else {
             attributes.addFlashAttribute("message","用户名或密码错误");
-            return "redirect:/admin";
+            return "redirect:admin";
         }
     }
 
@@ -49,7 +49,7 @@ public class LoginController {
     @GetMapping(value = "/logout")
     public String logout(HttpSession session){
         session.removeAttribute("user");
-        return "redirect:/admin";
+        return "redirect:admin";
     }
 
 }

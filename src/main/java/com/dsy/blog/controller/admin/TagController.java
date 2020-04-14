@@ -26,24 +26,24 @@ public class TagController {
     @Autowired
     private TagService tagService;
 
-    @GetMapping(value = "/tags")
+    @GetMapping(value = "tags")
     public String tags(@RequestParam(required = false,defaultValue = "1") String page,
                        Model model){
         PageHelper.startPage(Integer.parseInt(page),10);
         List<Tag> tags = tagService.getTagByPage();
         PageInfo<Tag> pageInfo = new PageInfo<Tag>(tags);
         model.addAttribute("pageInfo",pageInfo);
-        return "/admin/tags";
+        return "admin/tags";
     }
 
     /**
      * 跳转新增页面
      * @return
      */
-    @GetMapping(value = "/tags/input")
+    @GetMapping(value = "tags/input")
     public String input(Model model){
         model.addAttribute("tag",new Tag());
-        return "/admin/tags-input";
+        return "admin/tags-input";
     }
 
     /**
@@ -52,12 +52,12 @@ public class TagController {
      * @param model
      * @return
      */
-    @GetMapping(value = "/tags/{id}/input")
+    @GetMapping(value = "tags/{id}/input")
     public String editPage(@PathVariable String id,Model model){
         Tag tag = tagService.getTagById(Integer.valueOf(id));
         if (tag!=null){
             model.addAttribute("tag",tag);
-            return "/admin/tags-input";
+            return "admin/tags-input";
         }
         return "redirect:/admin/tags";
     }
@@ -69,12 +69,12 @@ public class TagController {
      * @param result
      * @return
      */
-    @PostMapping(value = "/tags/input")
+    @PostMapping(value = "tags/input")
     public String addTag(Tag tag, RedirectAttributes attributes, BindingResult result){
         Tag t = tagService.getTagByTagName(tag.getName());
         if (t!=null){
             result.rejectValue("name","nameError","标签名称不能重复");
-            return "/admin/tags-input";
+            return "admin/tags-input";
         }
         Tag saveTag = tagService.saveTag(tag);
         if (saveTag==null){
@@ -92,12 +92,12 @@ public class TagController {
      * @param result
      * @return
      */
-    @PostMapping(value = "/tags/edit")
+    @PostMapping(value = "tags/edit")
     public String editTag(Tag tag,RedirectAttributes attributes, BindingResult result){
         Tag t = tagService.getTagByTagName(tag.getName());
         if (t!=null&& !t.getName().equals(tag.getName())){
             result.rejectValue("name","nameError","标签名称不能重复");
-            return "/admin/tags-input";
+            return "admin/tags-input";
         }
         Tag updateTag = tagService.updateTag(tag);
         if (updateTag==null){

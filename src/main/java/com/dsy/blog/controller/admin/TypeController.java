@@ -30,7 +30,7 @@ public class TypeController {
      * @param page 页码
      * @return
      */
-    @GetMapping("/types")
+    @GetMapping("types")
     public String findAllTypes(Model model,
                                @RequestParam(required = false,defaultValue = "1") String page){
         PageHelper.startPage(Integer.parseInt(page),10);
@@ -43,7 +43,7 @@ public class TypeController {
      * 跳转到新增type页面
      * @return
      */
-    @GetMapping(value = "/types/input")
+    @GetMapping(value = "types/input")
     public String input(Model model){
         model.addAttribute("type",new Type());
         return "admin/types-input";
@@ -55,7 +55,7 @@ public class TypeController {
      * @param id
      * @return
      */
-    @GetMapping(value = "/types/{id}/input")
+    @GetMapping(value = "types/{id}/input")
     public String editPage(@PathVariable String id,Model model){
         Type type = typeService.getType(Integer.valueOf(id));
         model.addAttribute("type",type);
@@ -94,7 +94,7 @@ public class TypeController {
      * @param attributes
      * @return
      */
-    @PostMapping(value = "/types/edit")
+    @PostMapping(value = "types/edit")
     public String edit(Type type,BindingResult result, RedirectAttributes attributes){
         Type t = typeService.getTypeByName(type.getName());
         if (t!=null){
@@ -119,7 +119,7 @@ public class TypeController {
      * @param attributes  重定向后返回操作信息（成功，失败）
      * @return
      */
-    @GetMapping(value = "/types/{id}/delete")
+    @GetMapping(value = "types/{id}/delete")
     public String deleteType(@PathVariable String id,RedirectAttributes attributes){
         int i = typeService.deleteType(Integer.valueOf(id));
         if (i==1){

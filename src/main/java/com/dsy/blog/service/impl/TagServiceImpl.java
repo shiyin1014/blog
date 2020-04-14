@@ -92,10 +92,11 @@ public class TagServiceImpl implements TagService {
                 //更新redis中的数据
                 TagTops tagTops = (TagTops) redisTemplate.opsForHash().get(RedisKeyUtils.BLOG_TAGS, tag.getTagId());
                 log.info("从redis中获取数据：" + tagTops);
-                assert tagTops != null;
-                tagTops.setName(tag.getName());
-                redisTemplate.opsForHash().put(RedisKeyUtils.BLOG_TAGS, tagTops.getTagId(), tagTops);
-                log.info("更新redis中blogTags的相关数据" + tagTops);
+                if (tagTops != null) {
+                    tagTops.setName(tag.getName());
+                    redisTemplate.opsForHash().put(RedisKeyUtils.BLOG_TAGS, tagTops.getTagId(), tagTops);
+                    log.info("更新redis中blogTags的相关数据" + tagTops);
+                }
                 return tag;
             }
         }

@@ -28,8 +28,8 @@ import java.util.List;
 @RequestMapping(value = "/admin")
 public class BlogController {
 
-    private static final String INPUT = "/admin/blogs-input";
-    private static final String LIST = "/admin/blogs";
+    private static final String INPUT = "admin/blogs-input";
+    private static final String LIST = "admin/blogs";
     private static final String REDIRECT = "redirect:/admin/blogs";
 
 
@@ -42,7 +42,7 @@ public class BlogController {
     @Autowired
     private TagService tagService;
 
-    @GetMapping("/blogs")
+    @GetMapping("blogs")
     public String blogs(Model model, @RequestParam(required = false, defaultValue = "1") String page) {
         PageHelper.startPage(Integer.parseInt(page), 8);
         List<Blog> allBlogByPage = blogService.findAllBlogByPage();
@@ -50,10 +50,11 @@ public class BlogController {
         model.addAttribute("pageInfo", pageInfo);
         List<Type> types = typeService.allType();
         model.addAttribute("types", types);
+        model.addAttribute("flag", 1);
         return LIST;
     }
 
-    @PostMapping("/blogs/search")
+    @PostMapping("blogs/search")
     public String search(Model model, @RequestParam(required = false, defaultValue = "1") String page,
                          String title, String typeId, Boolean recommend) {
         PageHelper.startPage(Integer.parseInt(page), 8);
@@ -69,7 +70,7 @@ public class BlogController {
      * @param model
      * @return
      */
-    @GetMapping("/blogs/addPage")
+    @GetMapping("blogs/addPage")
     public String addPage(Model model) {
         model.addAttribute("blog",new Blog());
         model.addAttribute("types", typeService.allType());
@@ -83,7 +84,7 @@ public class BlogController {
      * @param model
      * @return
      */
-    @GetMapping("/blogs/{id}/edit")
+    @GetMapping("blogs/{id}/edit")
     public String editPage(Model model, @PathVariable String id) {
         Blog blog = blogService.findBlogByBlogId(Integer.valueOf(id));
         if (blog==null){
@@ -101,7 +102,7 @@ public class BlogController {
      * @param id 博客id
      * @return
      */
-    @GetMapping(value = "/blogs/{id}/delete")
+    @GetMapping(value = "blogs/{id}/delete")
     public String deleteBlog(@PathVariable String id,RedirectAttributes attributes){
         Integer integer = blogService.deleteBlog(Integer.valueOf(id));
         if (integer==1){

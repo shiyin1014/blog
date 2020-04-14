@@ -45,6 +45,6 @@ public class CommentController {
             comment.setAvatar(user.getAvatar());
         }
         commentService.saveComment(comment);
-        return "redirect:/comment/" + comment.getBlogId();
+        return "redirect:comment/" + comment.getBlogId();
     }
 }
