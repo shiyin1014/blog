@@ -25,7 +25,7 @@ spring:
     host: 101.37.86.173
     port: 6379
     database: 1
-    password: admin
+    password: 
     timeout: 10000
 # 日志设置
 logging:
