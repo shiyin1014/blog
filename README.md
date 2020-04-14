@@ -53,8 +53,6 @@ Druid数据监控：http://localhost:8080/druid/ 账号：admin 密码：admin
 
 ![后台管理.png](https://i.loli.net/2020/04/11/rVCk4flHwYMpFvD.png)
 
-# 注意
-由于新增了redis，暂时不想要此功能的朋友们可以看这一个版本：[点击我](https://github.com/shiyin1014/blog/tree/bc6082864a3e5a10e065fafbe28bc8ffb2659532)
 
 
 
