@@ -64,14 +64,15 @@ public class TypeServiceImpl implements TypeService {
             throw new NotFoundException("不存在该类型");
         } else {
             typeMapper.updateByPrimaryKey(type);
+            //更新redis中的数据
+            TypeTops typeTops = (TypeTops) redisTemplate.opsForHash().get(RedisKeyUtils.BLOG_TYPES, type.getTypeId());
+            log.info("从redis中获得数据：" + typeTops);
+            if (typeTops != null) {
+                typeTops.setName(type.getName());
+                redisTemplate.opsForHash().put(RedisKeyUtils.BLOG_TYPES, typeTops.getTypeId(), typeTops);
+                log.info("更新redis中的数据：" + typeTops);
+            }
         }
-        //更新redis中的数据
-        TypeTops typeTops = (TypeTops) redisTemplate.opsForHash().get(RedisKeyUtils.BLOG_TYPES, type.getTypeId());
-        log.info("从redis中获得数据：" + typeTops);
-        assert typeTops != null;
-        typeTops.setName(type.getName());
-        redisTemplate.opsForHash().put(RedisKeyUtils.BLOG_TYPES, typeTops.getTypeId(), typeTops);
-        log.info("更新redis中的数据：" + typeTops);
         return typeMapper.selectByPrimaryKey(type.getTypeId());
     }
 
