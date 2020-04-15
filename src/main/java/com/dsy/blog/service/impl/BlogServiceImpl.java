@@ -109,7 +109,7 @@ public class BlogServiceImpl implements BlogService {
             blog.setCreateTime(blog1.getCreateTime());
             blog.setViews(blog1.getViews());
             //更新TheLatestBlog数据
-            redisTemplate.opsForHash().put(RedisKeyUtils.THE_LATEST_BLOG, blog1.getBlogId(), blog);
+            redisTemplate.opsForHash().put(RedisKeyUtils.THE_LATEST_BLOG, blog.getBlogId(), blog);
             log.info("更新redis中TheLatestBlog的数据，标题为" + blog.getTitle());
             //更新AllBlog数据
             redisTemplate.opsForHash().put(RedisKeyUtils.ALL_BLOG, blog.getBlogId(), blog);
