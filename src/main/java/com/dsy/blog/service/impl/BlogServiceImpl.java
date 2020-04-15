@@ -105,8 +105,11 @@ public class BlogServiceImpl implements BlogService {
             //更新redis中BlogTags中相关的数据(由于一个博客可能对应无数个标签，故在此将redis中的BlogTags的key删除)
             redisTemplate.delete(RedisKeyUtils.BLOG_TAGS);
             log.info("删除redis中key为blogtags的hash数据类型");
+            Blog blog1 = blogMapper.selectByPrimaryKey(blog.getBlogId());
+            blog.setCreateTime(blog1.getCreateTime());
+            blog.setViews(blog1.getViews());
             //更新TheLatestBlog数据
-            redisTemplate.opsForHash().put(RedisKeyUtils.THE_LATEST_BLOG, blog.getBlogId(), blog);
+            redisTemplate.opsForHash().put(RedisKeyUtils.THE_LATEST_BLOG, blog1.getBlogId(), blog);
             log.info("更新redis中TheLatestBlog的数据，标题为" + blog.getTitle());
             //更新AllBlog数据
             redisTemplate.opsForHash().put(RedisKeyUtils.ALL_BLOG, blog.getBlogId(), blog);

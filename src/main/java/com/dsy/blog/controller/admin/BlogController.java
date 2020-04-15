@@ -130,8 +130,8 @@ public class BlogController {
         blog.setRecommend(blog.getRecommend() != null);
         blog.setAppreciation(blog.getAppreciation()!=null);
         blog.setShareStatement(blog.getShareStatement()!=null);
-        blog.setComment(blog.getComment()!=null);
-//        blog.setType(typeService.getType(blog.getType().getTypeId()));
+        blog.setComment(blog.getComment() != null);
+        blog.setType(typeService.getType(blog.getTypeId()));
         blog.setTags(tagService.listTag(tagIds));
         blog.setUserId(user.getUserId());
         blog.setTypeId(blog.getTypeId());
